@@ -1,33 +1,55 @@
 package io.springlab.springsecurityv3.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @EnableWebSecurity
 @Configuration
 public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 
+    private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public ApplicationSecurityConfiguration(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+
+    //creating in memory user and encrypt the password
+    @Override
+    @Bean
+    protected UserDetailsService userDetailsService() {
+        UserDetails demoUser= User.builder()
+                                    .username("abcdf")
+                                    .password(passwordEncoder.encode("12345"))
+                                    .roles("Student")
+                                    .build();
+
+        return new InMemoryUserDetailsManager(demoUser);
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         /*//Basic Authentication<Different from Form authentication> drawback:we cant log out.
-        //base 64 authentication is getting done;
+        //base 64 authentication is getting done;*/
         http.authorizeRequests()
-               .anyRequest()
-               .authenticated()
-               .and()
-               .httpBasic();*/
-
-        /*http.authorizeRequests()
                 .antMatchers("/","index","/css/*","/js/*")
                 .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-                .httpBasic();*/
+                .httpBasic();
 
 
 
