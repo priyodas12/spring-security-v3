@@ -13,12 +13,23 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //Basic Authentication<Different from Form authentication> drawback:we cant log out.
+        /*//Basic Authentication<Different from Form authentication> drawback:we cant log out.
+        //base 64 authentication is getting done;
         http.authorizeRequests()
                .anyRequest()
                .authenticated()
                .and()
-               .httpBasic();
+               .httpBasic();*/
+
+        /*http.authorizeRequests()
+                .antMatchers("/","index","/css/*","/js/*")
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .httpBasic();*/
+
+
 
     }
 }
