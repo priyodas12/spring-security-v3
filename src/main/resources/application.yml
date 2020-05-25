@@ -4,6 +4,9 @@ server:
 spring:
   application:
     name: spring-security-v3
+  output:
+    ansi:
+      enabled: always
 
 logging:
   level:
