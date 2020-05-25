@@ -29,13 +29,19 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
-        UserDetails demoUser= User.builder()
+        UserDetails commonUser= User.builder()
                                     .username("abcdf")
                                     .password(passwordEncoder.encode("12345"))
-                                    .roles("Student")
+                                    .roles(UserRoles.STUDENT.name())
                                     .build();
 
-        return new InMemoryUserDetailsManager(demoUser);
+        UserDetails adminUser= User.builder()
+                                    .username("admin")
+                                    .password(passwordEncoder.encode("pass12345"))
+                                    .roles(UserRoles.ADMIN.name())
+                                    .build();
+
+        return new InMemoryUserDetailsManager(adminUser,commonUser);
     }
 
     @Override
@@ -44,14 +50,11 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         /*//Basic Authentication<Different from Form authentication> drawback:we cant log out.
         //base 64 authentication is getting done;*/
         http.authorizeRequests()
-                .antMatchers("/","index","/css/*","/js/*")
-                .permitAll()
+                .antMatchers("/","index","/css/*","/js/*").permitAll()
+                .antMatchers("/globalapi/**").hasRole(UserRoles.STUDENT.name())
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
-
-
-
     }
 }

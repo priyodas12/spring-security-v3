@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v3/students")
+@RequestMapping("/globalapi/v3/students")
 public class StudentController {
 
 
