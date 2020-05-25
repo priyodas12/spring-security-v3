@@ -11,7 +11,11 @@ public enum UserRoles {
             UserPermissions.COURSE_READ,
             UserPermissions.STUDENT_READ,
             UserPermissions.STUDENT_WRITE
-            ));
+            )),
+    ADMINTRINEE(Sets.newHashSet(
+          UserPermissions.COURSE_READ,
+          UserPermissions.STUDENT_READ
+          ));
 
     private final Set<UserPermissions> permissions;
 

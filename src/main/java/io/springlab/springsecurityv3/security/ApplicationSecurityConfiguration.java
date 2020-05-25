@@ -29,19 +29,26 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Override
     @Bean
     protected UserDetailsService userDetailsService() {
+        //global student
         UserDetails commonUser= User.builder()
                                     .username("abcdf")
                                     .password(passwordEncoder.encode("12345"))
                                     .roles(UserRoles.STUDENT.name())
                                     .build();
-
+        //admin
         UserDetails adminUser= User.builder()
                                     .username("admin")
                                     .password(passwordEncoder.encode("pass12345"))
                                     .roles(UserRoles.ADMIN.name())
                                     .build();
+        //admin trainee
+        UserDetails maxxUser= User.builder()
+                                    .username("maxx")
+                                    .password(passwordEncoder.encode("password"))
+                                    .roles(UserRoles.ADMINTRINEE.name())
+                                    .build();
 
-        return new InMemoryUserDetailsManager(adminUser,commonUser);
+        return new InMemoryUserDetailsManager(adminUser,commonUser,maxxUser);
     }
 
     @Override
