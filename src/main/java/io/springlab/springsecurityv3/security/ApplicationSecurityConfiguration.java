@@ -13,7 +13,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        //Basic Authentication
+        //Basic Authentication<Different from Form authentication> drawback:we cant log out.
         http.authorizeRequests()
                .anyRequest()
                .authenticated()
