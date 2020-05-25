@@ -56,7 +56,8 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 
         /*//Basic Authentication<Different from Form authentication> drawback:we cant log out.
         //base 64 authentication is getting done;*/
-        http.authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/","index","/css/*","/js/*").permitAll()
                 .antMatchers("/globalapi/**").hasRole(UserRoles.STUDENT.name())
                 .anyRequest()

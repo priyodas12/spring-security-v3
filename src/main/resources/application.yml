@@ -4,3 +4,8 @@ server:
 spring:
   application:
     name: spring-security-v3
+
+logging:
+  level:
+    root: debug
+
